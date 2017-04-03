@@ -14,30 +14,42 @@ if (nombre) {
     socket.emit('nuevoConectado', nombre);
 
     socket.on('nuevoPersonaje',function(data){
-        
         renderNuevoConectado(data);
-
     });
 
 } else {
-
-    $('.grid-frame').text('Debes escribir tu nombre para usar el CHAT, recarga la pagina!!');
-    
+    $('.grid-frame').text('Debes escribir tu nombre para usar el CHAT, recarga la pagina!!');    
 }
 
 socket.on('messages',function(data){
     render(data);
 });
 
-function renderNuevoConectado(data) {
-    
+socket.on('escribiendoCliente',function(nombreEscribiendo){
+    if (nombreEscribiendo != document.getElementById('username').value) {
+        $('.escribiendo').fadeIn();   
+        $('.escribiendo h6').html('<p style="font-size:14px; color:grey;" > Escribiendo '+nombreEscribiendo+'...</p>');     
+    }
+});
 
-    data.map(function(elemt, index){
+socket.on('escribiendoPararCliente',function(nombreEscribiendo){
+    $('.escribiendo').fadeOut();
+});
+
+function renderNuevoConectado(data) {
+             
+       conectados = data.conectados;
+
+       conectados.map(function(elemt, index){
         
         if (elemt == nombre) {
-
-            alert("Algun person se conecto al CHAT");
+            
+            $('.nuevoChateador').html('Se ha conectado '+data.elNuevo);
+            $('.nuevoChateador').fadeIn();
+            setTimeout(function(){ $('.nuevoChateador').fadeOut(); }, 3000);
+            
             $('#username').val(elemt);
+            
             numeroAleatorio = Math.floor((Math.random() * 200) + 1)
             $('#avatar').val('https://unsplash.it/'+numeroAleatorio);
 
@@ -46,7 +58,7 @@ function renderNuevoConectado(data) {
     });
 
 
-    var html = data.map(function(elemt, index){
+    var html = conectados.map(function(elemt, index){
         return (
     `<li><a href="#">${elemt}</a></li>`);
 
@@ -56,9 +68,9 @@ function renderNuevoConectado(data) {
 }
 
 function render(data) {
-    console.log(data);
+    
+    $('.escribiendo').fadeOut();
 
-    console.log(silenciar);
     if (silenciar) {
         
         silenciar = false
@@ -66,22 +78,19 @@ function render(data) {
         audio.play();
     }
 
-    var html = data.map(function(elemt, index){
-     //sonidos
+    var html = data.map(function(elemt, index){    
 
+    return (
+            `<h5> ${elemt.text}</h5>
+            
+            <p style="font-size:14px; color:grey;" ><img  height="30" width="30" src="${elemt.avatar}">       by ${elemt.author}</p>
+            <hr/>`);
 
-        return (
-    `<h5> ${elemt.text}</h5>
-    
-     <p style="font-size:14px; color:grey;" ><img  height="30" width="30" src="${elemt.avatar}">       by ${elemt.author}</p>
-     <hr/>`);
-
-    }).join(" ");
+            }).join(" ");
     
     document.getElementById('messages').innerHTML = html;
 
-   $("#messages").animate({ scrollTop: $('#messages')[0].scrollHeight}, 1000);
-   
+   $("#messages").animate({ scrollTop: $('#messages')[0].scrollHeight}, 1000);   
 }
 
 function addMessage() {
@@ -93,19 +102,30 @@ function addMessage() {
         text: document.getElementById('texto').value,
         avatar: document.getElementById('avatar').value
     };
-
     
     document.getElementById('texto').value = '';
     socket.emit('nuevoMensaje', payload);
     return false;
 }
 
-
 var audio = new Audio('https://notificationsounds.com/notification-sounds/you-wouldnt-believe-510/download/mp3');
 
-
 $(document).ready(function(){
+
+    // $("#texto").keypress(function(){
+    //     socket.emit('escribiendo', document.getElementById('username').value);
+    // });
+    
     $(".button").click(function(){
         addMessage();
     });
+
+    $("#texto").focus(function(){
+        socket.emit('escribiendo', document.getElementById('username').value);
+    });
+
+    $("#texto").blur(function(){
+        socket.emit('escribiendoParar', document.getElementById('username').value);
+    });    
+
 });

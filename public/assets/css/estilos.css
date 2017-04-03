@@ -1,0 +1,14 @@
+.escribiendo {
+	position: fixed;
+	bottom:  50px;
+	right: 30px;
+	display: none;
+}
+
+
+.nuevoChateador {
+	position: fixed;
+	bottom:  50px;
+	right: 30px;
+	display: none;	
+}

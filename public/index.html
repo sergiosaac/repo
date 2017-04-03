@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chat - *****</title>
     <link href="assets/css/app.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/estilos.css" rel="stylesheet" type="text/css">
     <script src="assets/js/app.js"></script>
     <script src="assets/js/routes.js"></script>
     <script src="assets/js/angular.js"></script>
@@ -35,6 +36,10 @@
 
           <section class="block-list">
             <header>Temas</header>
+            <div class="escribiendo" >
+              <img src="http://www.yougotstyle.org/archives/images/quillani.gif">
+              <h6></h6>
+            </div> 
             
           </section>
 
@@ -57,6 +62,7 @@
             <div class="grid-content" id="messages">
               
             </div>
+
             <div class="message-input grid-content collapse shrink">
               <form onsubmit="return addMessage(this)">
               <span class="inline-label">
@@ -80,7 +86,7 @@
       </div>
 
     </div>
-
+    <a style="padding: 20px;" href="#" class="alert-box success round button nuevoChateador"></a>
   </body>
 
   <script

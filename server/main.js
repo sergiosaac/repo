@@ -17,14 +17,21 @@ var conectados = [];
 app.use(express.static('public'));
 
 app.get('/',function(req,res){
-    res.status(200).send('Hola nuevamentes');
+    res.status(200).send('Hola mundo');
 });
 
 io.on('connection', function(socket){
     
     socket.on('nuevoConectado', function(nuevo){
         conectados.push(nuevo);
-        io.sockets.emit('nuevoPersonaje',conectados);
+        
+        var data = {};
+
+        data.elNuevo = nuevo;
+        data.conectados = conectados;
+
+        io.sockets.emit('nuevoPersonaje',data);
+        
         socket.usuario = nuevo;
     });
     
@@ -33,17 +40,17 @@ io.on('connection', function(socket){
     socket.on('nuevoMensaje', function(data){
         MENSAJES.push(data);
         io.sockets.emit('messages',MENSAJES);
-
         MENSAJES.map(function(elemt, index){
-            console.log(elemt);
-            var stream = fs.createWriteStream("./test.txt");
-                stream.once('open', function(fd) {
-                stream.write(elemt.text);
-                
-            });
-            
+            console.log(elemt);                  
         });
+    });
 
+    socket.on('escribiendo', function(quienEscribe){
+       io.sockets.emit('escribiendoCliente',quienEscribe);
+    });
+
+    socket.on('escribiendoParar', function(quienEscribe){
+       io.sockets.emit('escribiendoPararCliente',quienEscribe);       
     });
 
 
@@ -56,8 +63,6 @@ io.on('connection', function(socket){
 });
 
 //helpers
-
-
 function removeItemFromArr ( arr, item ) {
     var i = arr.indexOf( item );
 
@@ -65,7 +70,6 @@ function removeItemFromArr ( arr, item ) {
         arr.splice( i, 1 );
     }
 }
-
 
 server.listen(3000, function(){
     console.log('Servidor corriendo en 3000');

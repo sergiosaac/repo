@@ -83,7 +83,7 @@ function render(data) {
 
         if (elemt.emoticon) { 
             return (
-            `<p style="font-size:14px; color:grey;" ><img  height="80" width="80" src="${elemt.url}"><br><img  height="30" width="30" src="${elemt.avatar}">     by ${elemt.author}</p>
+            `<p style="font-size:14px; color:grey;" ><img  height="100" width="100" src="${elemt.url}"><br> <br> <img  height="30" width="30" src="${elemt.avatar}">     by ${elemt.author}</p>
             <hr/>`);
         } else {
             return (

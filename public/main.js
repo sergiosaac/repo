@@ -7,6 +7,8 @@ var socket = io.connect('http://10.9.100.164:3000/', {
 
 var nombre = prompt("Escribe tu nombre: ");
 
+var silenciar = false;
+
 if (nombre) {
 
     socket.emit('nuevoConectado', nombre);
@@ -58,8 +60,10 @@ function render(data) {
     var html = data.map(function(elemt, index){
      //sonidos
 
-        if (true) {
+        if (silenciar) {
             audio.play();
+
+            silenciar = false;
         }
 
         return (
@@ -73,9 +77,6 @@ function render(data) {
     document.getElementById('messages').innerHTML = html;
 
    $("#messages").animate({ scrollTop: $('#messages')[0].scrollHeight}, 1000);
-
-   
-
    
 }
 
@@ -85,13 +86,17 @@ function addMessage() {
         text: document.getElementById('texto').value,
         avatar: document.getElementById('avatar').value
     };
+
+    silenciar = true;
+
+
     document.getElementById('texto').value = '';
     socket.emit('nuevoMensaje', payload);
     return false;
 }
 
 
-var audio = new Audio('http://soundbible.com/mp3/sms-alert-5-daniel_simon.mp3');
+var audio = new Audio('https://notificationsounds.com/notification-sounds/you-wouldnt-believe-510/download/mp3');
 
 
 $(document).ready(function(){

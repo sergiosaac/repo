@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var fs = require('fs');
+var fs = require('fs')
 
 var MENSAJES = [{
     
@@ -43,6 +43,15 @@ io.on('connection', function(socket){
         MENSAJES.map(function(elemt, index){
             console.log(elemt);                  
         });
+
+        
+        fs.appendFile('log.html', '<p>'+JSON.stringify(data)+'</p>', function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log('escribido!');
+            }
+        })
     });
 
     socket.on('escribiendo', function(quienEscribe){

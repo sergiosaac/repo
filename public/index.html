@@ -1,17 +1,95 @@
-<htm>
-    <head>
-        <title></title>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="main.js"></script>
-    </head>
-    <body>
-        <h1>Hola</h1>
-        <div id="messages"></div>
-        <br>
-        <form onsubmit="return addMessage(this)">
-            <input type="text" id="username" placeholder="tu nombre">
-            <input type="text" id="texto" placeholder="Cuentanos algo">
-            <input type="submit" value="Enviar!">
-        </form>
-    </body>
-</htm>
+<!doctype html>
+<html lang="en" ng-app="application">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat - *****</title>
+    <link href="assets/css/app.css" rel="stylesheet" type="text/css">
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/routes.js"></script>
+    <script src="assets/js/angular.js"></script>
+    
+  </head>
+
+  <style>
+    .message-input, .message-input .inline-label, .menu-bar {margin-bottom: 0;}
+    #sidebar, .messages {border-right: 1px solid #eee;}
+    .message-side-bar {border-left: 1px solid #eee;}
+    .avatar-section {border-top: 1px solid #eee;}
+  </style>
+
+  <body>
+    <div class="grid-frame">
+      <div zf-panel position="left" id="sidebar" class="medium-grid-block collapse medium-3 large-3 vertical">
+        <div class="grid-content collapse shrink hide-for-medium">
+          <a href="" class="secondary button expand" zf-close>Close</a>
+        </div>
+        <div class="grid-content collapse shrink">
+          <img src="http://posicionamientoenbuscadoreswebseo.es/wp-content/uploads/2015/06/gestion-redes-sociales-1.jpg">
+        </div>
+        <div class="grid-content">
+          
+          <section class="block-list" id="mensajesJson">
+            <header>WTF</header>
+          </section>
+
+          <section class="block-list">
+            <header>Temas</header>
+            
+          </section>
+
+       
+
+        </div>
+      </div>
+
+      <div class="grid-block collapse medium-9 large-9 vertical">
+        <div id="header" class="shrink collapse grid-content">
+          <ul class="menu-bar primary">
+            <li class="hide-for-medium"><a zf-open="sidebar" href="#">Menu</a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+          </ul>
+        </div>
+        <div class="grid-block">
+          <div class="grid-block small-12 medium-9 vertical">
+            <div class="grid-content" id="messages">
+              
+            </div>
+            <div class="message-input grid-content collapse shrink">
+              <form onsubmit="return addMessage(this)">
+              <span class="inline-label">
+                <input id="username" type="hidden">
+                <input id="avatar" type="hidden">
+                <input type="text" id="texto" placeholder="Mensaje">
+                <a href="#" class="button">Enviar</a>
+              </span>
+              </form>
+            </div>
+          </div>
+          <div class="grid-content medium-3 show-for-medium message-side-bar">
+            <section class="block-list">
+              <header>Conectados</header>
+              <ul id="listado">
+                
+              </ul>
+            </section>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="main.js"></script>
+</html>
+
+<!-- ui-view  -->

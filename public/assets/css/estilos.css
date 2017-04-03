@@ -12,3 +12,16 @@
 	right: 30px;
 	display: none;	
 }
+
+.emoticonesContenedor {
+	position: fixed;
+	padding: 10px;
+	margin: 20px;
+	bottom:  50px;
+	right: 30px;
+	display: none;	
+	-webkit-box-shadow: -1px 0px 52px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: -1px 0px 52px 0px rgba(0,0,0,0.75);
+	box-shadow: -1px 0px 52px 0px rgba(0,0,0,0.75);
+}
+

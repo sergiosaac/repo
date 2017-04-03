@@ -38,6 +38,9 @@ io.on('connection', function(socket){
     socket.emit('messages', MENSAJES);
 
     socket.on('nuevoMensaje', function(data){
+        
+        console.log(data);
+
         MENSAJES.push(data);
         io.sockets.emit('messages',MENSAJES);
         MENSAJES.map(function(elemt, index){
@@ -45,7 +48,7 @@ io.on('connection', function(socket){
         });
 
         
-        fs.appendFile('log.html', '<p>'+JSON.stringify(data)+'</p>', function (err) {
+        fs.appendFile('public/log.html', '<p>'+JSON.stringify(data)+'</p>', function (err) {
             if (err) {
                 console.log(err);
             } else {

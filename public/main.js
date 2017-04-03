@@ -67,8 +67,9 @@ function renderNuevoConectado(data) {
     document.getElementById('listado').innerHTML = html;
 }
 
-function render(data) {
+function render(data) {   
     
+    console.log(data);
     $('.escribiendo').fadeOut();
 
     if (silenciar) {
@@ -80,22 +81,33 @@ function render(data) {
 
     var html = data.map(function(elemt, index){    
 
-    return (
+        if (elemt.emoticon) { 
+            return (
+            `<p style="font-size:14px; color:grey;" ><img  height="80" width="80" src="${elemt.url}"><br><img  height="30" width="30" src="${elemt.avatar}">     by ${elemt.author}</p>
+            <hr/>`);
+        } else {
+            return (
             `<h5> ${elemt.text}</h5>
             
             <p style="font-size:14px; color:grey;" ><img  height="30" width="30" src="${elemt.avatar}">       by ${elemt.author}</p>
             <hr/>`);
+        }
 
-            }).join(" ");
+    }).join(" ");
     
     document.getElementById('messages').innerHTML = html;
 
    $("#messages").animate({ scrollTop: $('#messages')[0].scrollHeight}, 1000);   
 }
 
-function addMessage() {
+function addMessage(emoticon) {
     
     silenciar = true;
+
+    if (emoticon.emoticon) {
+        socket.emit('nuevoMensaje', emoticon);
+        return false;      
+    }
 
     var payload = {
         author: document.getElementById('username').value,
@@ -115,9 +127,49 @@ $(document).ready(function(){
     // $("#texto").keypress(function(){
     //     socket.emit('escribiendo', document.getElementById('username').value);
     // });
-    
-    $(".button").click(function(){
+
+    for (i = 1; i <= 189; i++) {
+        
+        var emoticon = `<a href="#"><img class="selecionarEnviarEmoticon" height="25" width="25" src="assets/img/emoticones-smile/Emoji Smiley-${i}.png" alt=""></a>`;
+        $('.emoticonesContenedor .grid-content').append(emoticon);
+    }
+
+    $('.emoticonesContenedor .grid-content').append("<hr>");
+
+    for (i = 10; i <= 107; i++) {
+        
+        var emoticon = `<a href="#"><img class="selecionarEnviarEmoticon" height="25" width="25" src="assets/img/emoticones-nature/Emoji Natur-${i}.png" alt=""></a>`;
+        $('.emoticonesContenedor .grid-content').append(emoticon);
+    }
+
+    $('.emoticonesContenedor .grid-content').append("<hr>");
+
+    for (i = 10; i <= 221; i++) {
+        
+        var emoticon = `<a href="#"><img class="selecionarEnviarEmoticon" height="25" width="25" src="assets/img/emoticones-objects/Emoji Objects-${i}.png" alt=""></a>`;
+        $('.emoticonesContenedor .grid-content').append(emoticon);
+    } 
+
+  
+
+    $(".selecionarEnviarEmoticon").click(function(event){       
+        event.preventDefault();
+        emoticonAEnviar = {};
+        emoticonAEnviar.url = $(this).attr('src');
+        emoticonAEnviar.emoticon = true;
+        emoticonAEnviar.author = document.getElementById('username').value;
+        emoticonAEnviar.avatar = document.getElementById('avatar').value;
+
+        $(".emoticonesContenedor").fadeToggle();
+        addMessage(emoticonAEnviar);
+    }); 
+
+    $(".enviarMensaje").click(function(){
         addMessage();
+    });  
+    
+    $(".enviarEmoticon").click(function(){
+        $(".emoticonesContenedor").fadeToggle();
     });
 
     $("#texto").focus(function(){

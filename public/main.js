@@ -1,4 +1,4 @@
-var socket = io.connect('http://localhost:3000/', {
+var socket = io.connect('http://54.69.189.35/:80/', {
     'forceNew':true
 });
 

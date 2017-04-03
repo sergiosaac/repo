@@ -57,14 +57,18 @@ function renderNuevoConectado(data) {
 
 function render(data) {
     console.log(data);
+
+    console.log(silenciar);
+    if (silenciar) {
+        
+        silenciar = false
+    } else {
+        audio.play();
+    }
+
     var html = data.map(function(elemt, index){
      //sonidos
 
-        if (silenciar) {
-            audio.play();
-
-            silenciar = false;
-        }
 
         return (
     `<h5> ${elemt.text}</h5>
@@ -81,15 +85,16 @@ function render(data) {
 }
 
 function addMessage() {
+    
+    silenciar = true;
+
     var payload = {
         author: document.getElementById('username').value,
         text: document.getElementById('texto').value,
         avatar: document.getElementById('avatar').value
     };
 
-    silenciar = true;
-
-
+    
     document.getElementById('texto').value = '';
     socket.emit('nuevoMensaje', payload);
     return false;

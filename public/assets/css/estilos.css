@@ -1,8 +1,14 @@
 .escribiendo {
 	position: fixed;
 	bottom:  50px;
-	right: 30px;
+	right: 50px;
 	display: none;
+}
+
+.escribiendo h6 {
+
+	margin-left: -20px;
+	margin-top: 20px;
 }
 
 
@@ -13,7 +19,15 @@
 	display: none;	
 }
 
+.salioChateador {
+	position: fixed;
+	bottom:  50px;
+	right: 30px;
+	display: none;	
+}
+
 .emoticonesContenedor {
+	background-color: white;
 	position: fixed;
 	padding: 10px;
 	margin: 20px;

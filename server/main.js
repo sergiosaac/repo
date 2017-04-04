@@ -69,7 +69,14 @@ io.on('connection', function(socket){
     //cuando el usuario cierra o actualiza el navegador
 	socket.on("disconnect", function()
 	{
-        removeItemFromArr( conectados, socket.usuario );   	
+        removeItemFromArr( conectados, socket.usuario );
+        data = {};
+        data.conectados =  conectados;
+        data.quienSalio =  socket.usuario;
+        io.sockets.emit('actualizarConectados',data);
+        console.log('salio',socket.usuario);
+        console.log(data);
+
 	});
 
 });

@@ -21,6 +21,13 @@ if (nombre) {
     $('.grid-frame').text('Debes escribir tu nombre para usar el CHAT, recarga la pagina!!');    
 }
 
+socket.on('actualizarConectados',function(data){
+    $('.salioChateador').html('Se ha desconectado '+data.quienSalio);
+    $('.salioChateador').fadeIn();
+    setTimeout(function(){ $('.salioChateador').fadeOut(); }, 3000);
+        renderNuevoConectado(data);
+    });
+
 socket.on('messages',function(data){
     render(data);
 });
@@ -42,7 +49,7 @@ function renderNuevoConectado(data) {
 
        conectados.map(function(elemt, index){
         
-        if (elemt == nombre) {
+        if (elemt == nombre && data.elNuevo != undefined) {
             
             $('.nuevoChateador').html('Se ha conectado '+data.elNuevo);
             $('.nuevoChateador').fadeIn();
@@ -50,8 +57,13 @@ function renderNuevoConectado(data) {
             
             $('#username').val(elemt);
             
-            numeroAleatorio = Math.floor((Math.random() * 200) + 1)
-            $('#avatar').val('https://unsplash.it/'+numeroAleatorio);
+            numeroAleatorio = Math.floor((Math.random() * 2) + 1)
+
+            var perfiles = ['https://images.vexels.com/media/users/3/140750/isolated/preview/c9b1b66ee3fc60f9bb0aa9a5bee63a9f-perfil-masculino-avatar-2-by-vexels.png',
+                            'https://images.vexels.com/media/users/3/140748/isolated/preview/5b078a59390bb4666df98b49f1cdedd0-perfil-avatar-masculino-by-vexels.png',
+                            'https://s-media-cache-ak0.pinimg.com/236x/19/87/90/198790eb7e08830027c1ae1686496c72.jpg'];
+
+            $('#avatar').val(perfiles[numeroAleatorio]);
 
             return;
         }
@@ -60,11 +72,12 @@ function renderNuevoConectado(data) {
 
     var html = conectados.map(function(elemt, index){
         return (
-    `<li><a href="#">${elemt}</a></li>`);
+    `<li><a href="#"> <span style="background: rgb(66, 183, 42); border-radius: 50%; display: inline-block; height: 6px; margin-left: 4px; width: 6px;"></span>      ${elemt}</a></li>`);
 
     }).join(" ");
     
     document.getElementById('listado').innerHTML = html;
+
 }
 
 function render(data) {   
@@ -100,12 +113,12 @@ function render(data) {
    $("#messages").animate({ scrollTop: $('#messages')[0].scrollHeight}, 1000);   
 }
 
-function addMessage(emoticon = null) {
+function addMessage(emoticon) {
     
     silenciar = true;
 
 
-    if (emoticon) {
+    if (emoticon != undefined ) {
         if ( emoticon.emoticon) {
             socket.emit('nuevoMensaje', emoticon);
             return false;      
@@ -128,9 +141,9 @@ var audio = new Audio('https://notificationsounds.com/notification-sounds/you-wo
 
 $(document).ready(function(){
 
-    // $("#texto").keypress(function(){
-    //     socket.emit('escribiendo', document.getElementById('username').value);
-    // });
+    $("#texto").keypress(function(){
+        socket.emit('escribiendo', document.getElementById('username').value);
+    });
 
     for (i = 1; i <= 189; i++) {
         

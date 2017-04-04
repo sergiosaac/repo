@@ -30,17 +30,17 @@
         </div>
         <div class="grid-content">
           
-          <section class="block-list" id="mensajesJson">
-            <header>WTF</header>
+          <section class="block-list">
+            <header>Hablando con: </header>
           </section>
 
-          <section class="block-list">
-            <header>Temas</header>
-            <div class="escribiendo" >
-              <img src="http://www.yougotstyle.org/archives/images/quillani.gif">
-              <h6></h6>
-            </div> 
-          </section>
+          <div class="card-section">
+            <img src="https://scontent.fasu1-1.fna.fbcdn.net/v/t1.0-9/17499539_1311332335621870_4533680656220273684_n.jpg?oh=39db48e7a708aca383157e7b8be50703&oe=5954BB5D">
+            <br>
+            <h4>Jennifer Aniston </h4>
+            <p>Jennifer Joanna Aniston, conocida artísticamente como Jennifer Aniston, es una actriz de cine y televisión estadounidense, de origen griego e italiano.</p>
+          </div>
+
         </div>
       </div>
 
@@ -48,9 +48,10 @@
         <div id="header" class="shrink collapse grid-content">
           <ul class="menu-bar primary">
             <li class="hide-for-medium"><a zf-open="sidebar" href="#">Menu</a></li>
-            <li><a href="#"></a></li>
-            <li><a href="#"></a></li>
-            <li><a href="#"></a></li>
+            <li><a href="#" zf-open="panelName">Perfil</a></li>
+            <li><a href="#">Radio</a></li>
+            <li><a href="#">Configuracion</a></li>
+            <li><a href="#">Salir</a></li>
           </ul>
         </div>
         <div class="grid-block">
@@ -79,16 +80,46 @@
                 
               </ul>
             </section>
+
+            <section class="block-list">
+              <header> Chat Rooms </header>
+              <ul id="listadoRooms">
+                
+              </ul>
+            </section>
           </div>
         </div>
       </div>
 
     </div>
     <a style="padding: 20px;" href="#" class="alert-box success round button nuevoChateador"></a>
+    <a style="padding: 20px;" href="#" class="alert-box warning round button salioChateador"></a>
     
     <div class="emoticonesContenedor">
       <div class="small-6 grid-content">
-        
+      </div>
+    </div>
+    <div class="escribiendo" >
+      <img src="http://www.yougotstyle.org/archives/images/quillani.gif">
+      <h6></h6>
+    </div>
+
+
+    <div zf-panel="" id="panelName">
+    <a zf-close="" class="button">Cerrar</a>
+
+    <div ng-controller="PerfilController" class="small-12 medium-6 large-4 grid-content">
+      <div class="card">
+        <img src="http://placekitten.com/g/400/200">
+        <div class="card-divider">
+          
+        </div>
+        <div class="card-section">
+          <h4>{{ usuarioNombre }}</h4>
+          <hr>
+          <p>{{ usuarioDescripcion }}</p>
+        </div>
+        </div>
       </div>
     </div>
 
@@ -101,6 +132,8 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="main.js"></script>
+    <script src="assets/script-app/script.js"></script>
+
 </html>
 
 <!-- ui-view  -->

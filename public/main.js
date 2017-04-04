@@ -1,7 +1,7 @@
 
 
 
-var socket = io.connect('http://10.9.100.164:3000/', {
+var socket = io.connect('http://localhost:3000/', {
     'forceNew':true
 });
 
@@ -89,7 +89,7 @@ function render(data) {
             return (
             `<h5> ${elemt.text}</h5>
             
-            <p style="font-size:14px; color:grey;" ><img  height="30" width="30" src="${elemt.avatar}">       by ${elemt.author}</p>
+            <p style="float:rigth;font-size:14px; color:grey;" ><img  height="30" width="30" src="${elemt.avatar}">       by ${elemt.author}</p>
             <hr/>`);
         }
 
@@ -100,14 +100,18 @@ function render(data) {
    $("#messages").animate({ scrollTop: $('#messages')[0].scrollHeight}, 1000);   
 }
 
-function addMessage(emoticon) {
+function addMessage(emoticon = null) {
     
     silenciar = true;
 
-    if (emoticon.emoticon) {
-        socket.emit('nuevoMensaje', emoticon);
-        return false;      
+
+    if (emoticon) {
+        if ( emoticon.emoticon) {
+            socket.emit('nuevoMensaje', emoticon);
+            return false;      
+        }
     }
+    
 
     var payload = {
         author: document.getElementById('username').value,
@@ -165,6 +169,7 @@ $(document).ready(function(){
     }); 
 
     $(".enviarMensaje").click(function(){
+        event.preventDefault();
         addMessage();
     });  
     

@@ -1,7 +1,7 @@
 
 
 
-var socket = io.connect('http://192.168.1.61:3000/', {
+var socket = io.connect('http://localhost:3000/', {
     'forceNew':true
 });
 

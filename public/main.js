@@ -1,7 +1,7 @@
 
 
 
-var socket = io.connect('http://localhost:3000/', {
+var socket = io.connect('http://192.168.1.61:3000/', {
     'forceNew':true
 });
 
@@ -20,6 +20,8 @@ if (nombre) {
 } else {
     $('.grid-frame').text('Debes escribir tu nombre para usar el CHAT, recarga la pagina!!');    
 }
+
+
 
 socket.on('actualizarConectados',function(data){
     $('.salioChateador').html('Se ha desconectado '+data.quienSalio);

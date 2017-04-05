@@ -34,6 +34,8 @@ io.on('connection', function(socket){
         
         socket.usuario = nuevo;
     });
+
+    
     
     socket.emit('messages', MENSAJES);
 
